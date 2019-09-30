@@ -26,13 +26,17 @@ public:
 template <typename T>
 bool JacobiIteration<T>::solve(std::vector<T>& result) const
 {
-    if (_Ab.rows() != _Ab.cols() - 1)
+    if (_Ab.rows() != _Ab.cols() - 1) {
+        std::cout << "Wrong input!\n";
         return false;
+    }
     int n = _Ab.rows();
     Matrix<T> Bf = _Ab;
     for (int i=0; i<n; i++) {
-        if (Bf.access(i, i) <= 1e-10)
+        if (abs(_Ab.read(i, i)) <= 1e-10) {
+            std::cout << "Wrong matrix! Zero element(s) on the principal diagonal.\n";
             return false;
+        }
         for (int j=0; j<n+1; j++) {
             Bf.access(i, j) /= _Ab.read(i, i);
             if (j < n) {
@@ -54,6 +58,7 @@ bool JacobiIteration<T>::solve(std::vector<T>& result) const
             error = error < abs(result[i] - last_res[i]) ? abs(result[i] - last_res[i]) : error;
         }
         if (last_error != 0 && error > last_error * 2) {
+            std::cout << "Wrong! Non convergence!\n";
             return false;
         }
         last_error = error;

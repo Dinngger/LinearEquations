@@ -26,8 +26,10 @@ public:
 template <typename T>
 bool GaussEliminationWithPivoting<T>::solve(std::vector<T>& result) const
 {
-    if (_Ab.rows() != _Ab.cols() - 1)
+    if (_Ab.rows() != _Ab.cols() - 1) {
+        std::cout << "Wrong input!\n";
         return false;
+    }
     int n = _Ab.rows();
     Matrix<T> Ab = _Ab;
     for (int k=0; k < n-1; k++) {
@@ -40,8 +42,10 @@ bool GaussEliminationWithPivoting<T>::solve(std::vector<T>& result) const
             }
         }
         Ab.swapRow(k, max_r);
-        if (max_value <= 1e-10)
+        if (max_value <= 1e-10) {
+            std::cout << "Wrong! Singular matrix!\n";
             return false;
+        }
         for (int i=k+1; i<n; i++) {
             Ab.access(i, k) /= Ab.access(k, k);
             for (int j=k+1; j<n+1; j++) {
