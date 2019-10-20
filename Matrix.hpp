@@ -15,7 +15,7 @@
 
 typedef unsigned int uint;
 
-template <class T>
+template <typename T>
 class Matrix {
 private:
     uint _rows;
@@ -43,21 +43,21 @@ public:
     void say() const;
 };
 
-template <class T>
+template <typename T>
 Matrix<T>::Matrix():
-        _rows(3), _cols(1) {
+        _rows(0), _cols(0) {
     _size = _rows * _cols;
     _data.resize(_size);
 }
 
-template <class T>
+template <typename T>
 Matrix<T>::Matrix(uint rows, uint cols):
         _rows(rows), _cols(cols) {
     _size = rows * cols;
     _data.resize(_size);
 }
 
-template <class T>
+template <typename T>
 void Matrix<T>::swapRow(uint i, uint j) {
     if (i == j)
         return;
@@ -66,7 +66,7 @@ void Matrix<T>::swapRow(uint i, uint j) {
     }
 }
 
-template <class T>
+template <typename T>
 void Matrix<T>::swapCol(uint i, uint j) {
     if (i == j)
         return;
@@ -80,7 +80,7 @@ void Matrix<T>::say() const
 {
     for (int i=0; i<_rows; i++) {
         for (int j=0; j<_cols; j++)
-            std::cout << _data[j * _rows + i] << " ";
+            std::cout << read(i, j) << " ";
         std::cout << std::endl;
     }
 }

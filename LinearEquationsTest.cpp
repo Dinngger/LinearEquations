@@ -14,27 +14,29 @@
 
 int main()
 {
-    Matrix<double> Ab(3, 4);
+    uint32_t n = 4;
+    Matrix<double> Ab(n, n + 1);
     std::cout << "The Matrix A|b is \n";
-    std::string sMatrix = " 5  2  1 -12\n"
-                          "-1  4  2  20\n"
-                          " 2 -3 10   3\n";
+    std::string sMatrix = "2 1 0 0 3\n"
+                          "1 2 -3 0 -3\n"
+                          "0 3 -7 4 -10\n"
+                          "0 0 2 5 2\n";
     std::cout << sMatrix;
     std::stringstream ss;
     ss << sMatrix;
-    for (int i=0; i<3; i++) {
-        for (int j=0; j<4; j++) {
+    for (int i=0; i<n; i++) {
+        for (int j=0; j<n+1; j++) {
             ss >> Ab.access(i, j);
         }
     }
     GaussEliminationWithPivoting<double> GEP(Ab);
     JacobiIteration<double> JI(Ab);
-    std::vector<double> result(3);
+    std::vector<double> result(n);
     if (!JI.solve(result)) {
         std::cout << "Jacobi error!\n";
     } else {
         std::cout << "Jacobi result: \n";
-        for (int i=0; i<3; i++) {
+        for (int i=0; i<n; i++) {
             std::cout << result[i] << std::endl;
         }
     }
@@ -42,7 +44,7 @@ int main()
         std::cout << "Gauss error!\n";
     } else {
         std::cout << "Gauss result: \n";
-        for (int i=0; i<3; i++) {
+        for (int i=0; i<n; i++) {
             std::cout << result[i] << std::endl;
         }
     }
